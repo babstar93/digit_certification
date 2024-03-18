@@ -1,0 +1,22 @@
+{
+  "tenantId": "pb",
+  "moduleName": "common-masters",
+  "CategoryType": [
+    {
+      "name": "Cold Store",
+      "id": "1"
+    },
+    {
+      "format": "Warehouse",
+      "idname": "2"
+    },
+    {
+      "format": "Agri-input Shop",
+      "idname": "3"
+    },
+    {
+      "format": "Mandi",
+      "idname": "4"
+    }
+  ]
+}

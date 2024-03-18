@@ -1,0 +1,90 @@
+serviceMaps:
+ serviceName: dtr
+ mappings:
+ - version: 1.0
+   description: Persists DET Application details in eg_dt_registration and eg_dt_address table
+   fromTopic: save-dt-application
+   isTransaction: true
+   queryMaps:
+     - query: INSERT INTO eg_dt_registration(id, tenantId, applicationNumber, deceasedFirstName, deceasedLastName, timeOfDeath, createdBy, lastModifiedBy, createdTime, lastModifiedTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+       basePath: $.DeathRegistrationApplications.*
+       jsonMaps:
+         - jsonPath: $.DeathRegistrationApplications.*.id
+
+         - jsonPath: $.DeathRegistrationApplications.*.tenantId
+
+         - jsonPath: $.DeathRegistrationApplications.*.applicationNumber
+
+         - jsonPath: $.DeathRegistrationApplications.*.deceasedFirstName
+
+         - jsonPath: $.DeathRegistrationApplications.*.deceasedLastName
+
+         - jsonPath: $.DeathRegistrationApplications.*.timeOfDeath
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.createdBy
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedBy
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.createdTime
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedTime
+
+     - query: INSERT INTO eg_dt_address(tenantId, latitude, longitude, addressId, addressNumber, addressLine1, addressLine2, landmark, city, pincode, detail, registrationId, createdBy, lastModifiedBy, createdTime, lastModifiedTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+       basePath: $.DeathRegistrationApplications.*.addressOfDeceased
+       jsonMaps:
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.tenantId
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.latitude
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.longitude
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.addressId
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.addressNumber
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.addressLine1
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.addressLine2
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.landmark
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.city
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.pincode
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.detail
+
+         - jsonPath: $.DeathRegistrationApplications.*.addressOfDeceased.registrationId
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.createdBy
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedBy
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.createdTime
+         
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedTime
+
+         
+ - version: 1.0
+   description: update DET Application details in eg_dt_registration and eg_dt_address table
+   fromTopic: update-dt-application
+   isTransaction: true
+   queryMaps:
+     - query: UPDATE eg_dt_registration SET applicantId=?, deceasedFirstName=?, deceasedLastName=?, timeOfDeath=?, lastModifiedBy=?, lastModifiedTime=? WHERE tenantId=? and applicationNumber=?;
+       basePath: $.DeathRegistrationApplications.*
+       jsonMaps:
+         - jsonPath: $.DeathRegistrationApplications.*.applicant.id
+
+         - jsonPath: $.DeathRegistrationApplications.*.deceasedFirstName
+         
+         - jsonPath: $.DeathRegistrationApplications.*.deceasedLastName
+
+         - jsonPath: $.DeathRegistrationApplications.*.timeOfDeath
+         
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedBy
+
+         - jsonPath: $.DeathRegistrationApplications.*.auditDetails.lastModifiedTime
+
+         - jsonPath: $.DeathRegistrationApplications.*.tenantId
+
+         - jsonPath: $.DeathRegistrationApplications.*.applicationNumber
