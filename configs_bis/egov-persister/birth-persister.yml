@@ -20,9 +20,9 @@ serviceMaps:
             
             - jsonPath: $.BirthRegistrationApplications.*.babyLastName
           
-            - jsonPath: $.BirthRegistrationApplications.*.fatherOfApplicant.id
+            - jsonPath: $.BirthRegistrationApplications.*.fatherOfApplicant.uuid
             
-            - jsonPath: $.BirthRegistrationApplications.*.motherOfApplicant.id
+            - jsonPath: $.BirthRegistrationApplications.*.motherOfApplicant.uuid
                                            
             - jsonPath: $.BirthRegistrationApplications.*.doctorName
             
