@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -90,12 +94,12 @@ public class UserService {
         // Search on mobile number as user name
         UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getMobileNumber());
         if (!userDetailResponse.getUser().isEmpty()) {
-//            User userFromSearch = userDetailResponse.getUser().get(0);
-//            log.info(userFromSearch.toString());
-//            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName())){
-//                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
-//            }
-//            else userServiceResponse = userDetailResponse.getUser().get(0);
+            org.egov.common.contract.request.User userFromSearch = userDetailResponse.getUser().get(0);
+            log.info(userFromSearch.toString());
+            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName())){
+                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
+            }
+            else userServiceResponse = userDetailResponse.getUser().get(0);
         }
         else {
             userServiceResponse = createUser(requestInfo,tenantId,user);
@@ -156,21 +160,22 @@ public class UserService {
      * @param userFromSearch
      * @return
      */
-//    private User updateUser(RequestInfo requestInfo,User user,User userFromSearch) {
-//
-//        userFromSearch.setName(user.getName());
-//        userFromSearch.setActive(true);
-//
-//        StringBuilder uri = new StringBuilder(config.getUserHost())
-//                .append(config.getUserContextPath())
-//                .append(config.getUserUpdateEndpoint());
-//
-//
-//        UserDetailResponse userDetailResponse = userUtils.userCall(new CreateUserRequest(requestInfo, userFromSearch), uri);
-//
-//        return userDetailResponse.getUser().get(0);
-//
-//    }
+    private org.egov.common.contract.request.User updateUser(RequestInfo requestInfo,User user,org.egov.common.contract.request.User userFromSearch) {
+
+        User userBis = new User();
+        userBis.setName(user.getName());
+        userBis.setActive(true);
+
+        StringBuilder uri = new StringBuilder(config.getUserHost())
+                .append(config.getUserContextPath())
+                .append(config.getUserUpdateEndpoint());
+
+
+        UserDetailResponse userDetailResponse = userUtils.userCall(new CreateUserRequest(requestInfo, userBis), uri);
+
+        return userDetailResponse.getUser().get(0);
+
+    }
 
     /**
      * calls the user search API based on the given accountId and userName
@@ -218,7 +223,7 @@ public class UserService {
 //
 //        StringBuilder uri = new StringBuilder(config.getUserHost()).append(config.getUserSearchEndpoint());
 //        UserDetailResponse userDetailResponse = userUtils.userCall(userSearchRequest,uri);
-//        List<User> users = userDetailResponse.getUser();
+//        List<org.egov.common.contract.request.User> users = userDetailResponse.getUser();
 //
 //        if(CollectionUtils.isEmpty(users))
 //            throw new CustomException("USER_NOT_FOUND","No user found for the uuids");
