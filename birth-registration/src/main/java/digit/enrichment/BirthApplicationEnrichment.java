@@ -36,8 +36,8 @@ public class BirthApplicationEnrichment {
             // Enrich UUID
             application.setId(UUID.randomUUID().toString());
 
-//            application.getFather().setId(application.getId());
-//            application.getMother().setId(application.getId());
+            application.getFather().setUuid(application.getId());
+            application.getMother().setUuid(application.getId());
 
             // Enrich registration Id
             application.getAddress().setRegistrationId(application.getId());
@@ -58,10 +58,10 @@ public class BirthApplicationEnrichment {
     }
 
 //    public void enrichFatherApplicantOnSearch(BirthRegistrationApplication application) {
-//        UserDetailResponse fatherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getFather().getId(),null);
+//        digit.models.coremodels.UserDetailResponse fatherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getFather().getId()+"",null);
 //        User fatherUser = fatherUserResponse.getUser().get(0);
 //        log.info(fatherUser.toString());
-//        FatherApplicant fatherApplicant = FatherApplicant.builder().aadhaarNumber(fatherUser.getAadhaarNumber())
+//        User fatherApplicant = User.builder().aadhaarNumber(fatherUser.getAadhaarNumber())
 //                .accountLocked(fatherUser.getAccountLocked())
 //                .active(fatherUser.getActive())
 //                .altContactNumber(fatherUser.getAltContactNumber())
@@ -70,7 +70,7 @@ public class BirthApplicationEnrichment {
 //                .correspondenceCity(fatherUser.getCorrespondenceCity())
 //                .correspondencePincode(fatherUser.getCorrespondencePincode())
 //                .gender(fatherUser.getGender())
-//                .id(fatherUser.getUuid())
+//                .id(Integer.parseInt(fatherUser.getUuid()))
 //                .name(fatherUser.getName())
 //                .type(fatherUser.getType())
 //                .roles(fatherUser.getRoles()).build();

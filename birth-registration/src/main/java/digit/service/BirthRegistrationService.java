@@ -5,11 +5,8 @@ import digit.enrichment.BirthApplicationEnrichment;
 import digit.kafka.Producer;
 import digit.repository.BirthRegistrationRepository;
 import digit.validators.BirthApplicationValidator;
-import digit.web.models.BirthApplicationSearchCriteria;
-import digit.web.models.BirthRegistrationApplication;
-import digit.web.models.BirthRegistrationRequest;
+import digit.web.models.*;
 //import digit.web.models.FatherApplicant;
-import digit.web.models.Workflow;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,9 +74,10 @@ public class BirthRegistrationService {
 //        });
 
         //WORKFLOW INTEGRATION
-        applications.forEach(application -> {
-            application.setWorkflow(Workflow.builder().status(workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), application.getApplicationNumber()).getState().getState()).build());
-        });
+//        applications.forEach(application -> {
+//            ProcessInstance process = workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), "BTR");
+//            application.setWorkflow(Workflow.builder().status(process.getState().getState()).build());
+//        });
 
         // Otherwise return the found applications
         return applications;

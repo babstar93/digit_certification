@@ -16,6 +16,7 @@ import java.util.Map;
 public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthRegistrationApplication>> {
     public List<BirthRegistrationApplication> extractData(ResultSet rs) throws SQLException, DataAccessException {
         Map<String,BirthRegistrationApplication> birthRegistrationApplicationMap = new LinkedHashMap<>();
+        System.out.println(rs);
 
         while (rs.next()){
             String uuid = rs.getString("bapplicationnumber");
@@ -29,8 +30,8 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
                 }
 
 
-//                Applicant father = Applicant.builder().id(rs.getString("bfatherid")).build();
-//                Applicant mother = Applicant.builder().id(rs.getString("bmotherid")).build();
+                User father = User.builder().uuid(rs.getString("bfatherid")).build();
+                User mother = User.builder().uuid(rs.getString("bmotherid")).build();
 
                 AuditDetails auditdetails = AuditDetails.builder()
                         .createdBy(rs.getString("bcreatedBy"))
@@ -45,8 +46,8 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
                         .id(rs.getString("bid"))
                         .babyFirstName(rs.getString("bbabyfirstname"))
                         .babyLastName(rs.getString("bbabylastname"))
-//                        .fatherOfApplicant(father)
-//                        .motherOfApplicant(mother)
+                        .father(father)
+                        .mother(mother)
                         .doctorName(rs.getString("bdoctorname"))
                         .hospitalName(rs.getString("bhospitalname"))
                         .placeOfBirth(rs.getString("bplaceofbirth"))
