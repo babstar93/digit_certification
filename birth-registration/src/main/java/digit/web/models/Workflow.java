@@ -30,7 +30,7 @@ public class Workflow   {
 
                 private String action = null;
 
-        @JsonProperty("comment")
+        @JsonProperty("comments")
 
                 private String comment = null;
 

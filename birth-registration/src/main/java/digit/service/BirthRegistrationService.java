@@ -74,10 +74,10 @@ public class BirthRegistrationService {
 //        });
 
         //WORKFLOW INTEGRATION
-//        applications.forEach(application -> {
-//            ProcessInstance process = workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), "BTR");
-//            application.setWorkflow(Workflow.builder().status(process.getState().getState()).build());
-//        });
+        applications.forEach(application -> {
+            ProcessInstance process = workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), "BTR");
+            application.setWorkflow(Workflow.builder().status(process.getState().getState()).build());
+        });
 
         // Otherwise return the found applications
         return applications;
