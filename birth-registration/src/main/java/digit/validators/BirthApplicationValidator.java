@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
+
 @Component
 public class BirthApplicationValidator {
 
@@ -23,6 +25,17 @@ public class BirthApplicationValidator {
     }
 
     public BirthRegistrationApplication validateApplicationExistence(BirthRegistrationApplication birthRegistrationApplication) {
-        return repository.getApplications(BirthApplicationSearchCriteria.builder().applicationNumber(birthRegistrationApplication.getApplicationNumber()).build()).get(0);
+        if (birthRegistrationApplication.getApplicationNumber() == null) {
+            throw new IllegalArgumentException("Application number cannot be null");
+        }
+
+        List<BirthRegistrationApplication> applications = repository.getApplications(BirthApplicationSearchCriteria.builder().
+                applicationNumber(birthRegistrationApplication.getApplicationNumber()).build());
+
+        if (applications.isEmpty()) {
+            throw new CustomException("BT_APP_NOT_FOUND", "Application number not found");
+        }
+
+        return applications.get(0);
     }
 }

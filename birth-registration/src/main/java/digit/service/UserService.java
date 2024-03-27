@@ -83,7 +83,6 @@ public class UserService {
                 .type(mother.getType())
                 .roles(mother.getRoles())
                 .build();
-//        String tenantId = father.getTenantId();
         return user;
     }
     private String upsertUser(User user, RequestInfo requestInfo){
@@ -204,33 +203,5 @@ public class UserService {
         return userUtils.userCall(userSearchRequest,uri);
 
     }
-
-    /**
-     * calls the user search API based on the given list of user uuids
-     * @param uuids
-     * @return
-     */
-//    private Map<String,User> searchBulkUser(List<String> uuids){
-//
-//        UserSearchRequest userSearchRequest =new UserSearchRequest();
-//        userSearchRequest.setActive(true);
-//        userSearchRequest.setUserType("CITIZEN");
-//
-//
-//        if(!CollectionUtils.isEmpty(uuids))
-//            userSearchRequest.setUuid(uuids);
-//
-//
-//        StringBuilder uri = new StringBuilder(config.getUserHost()).append(config.getUserSearchEndpoint());
-//        UserDetailResponse userDetailResponse = userUtils.userCall(userSearchRequest,uri);
-//        List<org.egov.common.contract.request.User> users = userDetailResponse.getUser();
-//
-//        if(CollectionUtils.isEmpty(users))
-//            throw new CustomException("USER_NOT_FOUND","No user found for the uuids");
-//
-//        Map<String,User> idToUserMap = users.stream().collect(Collectors.toMap(User::getUuid, Function.identity()));
-//
-//        return idToUserMap;
-//    }
 
 }
