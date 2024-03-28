@@ -42,8 +42,8 @@ import java.util.*;
 
         @Autowired
         public BirthApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
+            this.objectMapper = objectMapper;
+            this.request = request;
         }
 
                 @RequestMapping(value="/birth/registration/v1/_create", method = RequestMethod.POST)

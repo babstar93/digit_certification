@@ -38,22 +38,22 @@ public class UserService {
      */
     public void callUserService(BirthRegistrationRequest request){
         request.getBirthRegistrationApplications().forEach(application -> {
-            if(!StringUtils.isEmpty(application.getFather().getId()+"")) {
+//            if(!StringUtils.isEmpty(application.getFather().getId()+"")) {
 //                enrichUser(application, request.getRequestInfo());
-            }else {
+//            }else {
                 User user = createFatherUser(application);
-                application.getFather().setId(Integer.valueOf(upsertUser(user, request.getRequestInfo())));
-            }
+                application.getFather().setUuid(upsertUser(user, request.getRequestInfo()));
+//            }
         });
 
         request.getBirthRegistrationApplications().forEach(application -> {
-            if(!StringUtils.isEmpty(application.getMother().getId()+"")) {
+//            if(!StringUtils.isEmpty(application.getMother().getId()+"")) {
 //                enrichUser(application, request.getRequestInfo());
-            }
-            else {
+//            }
+//            else {
                 User user = createMotherUser(application);
-                application.getMother().setId(Integer.valueOf(upsertUser(user, request.getRequestInfo())));
-            }
+                application.getMother().setUuid(upsertUser(user, request.getRequestInfo()));
+//            }
         });
     }
 
@@ -91,14 +91,15 @@ public class UserService {
         org.egov.common.contract.request.User userServiceResponse = null;
 
         // Search on mobile number as user name
-        UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getMobileNumber());
+        UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getUserName());
         if (!userDetailResponse.getUser().isEmpty()) {
             org.egov.common.contract.request.User userFromSearch = userDetailResponse.getUser().get(0);
             log.info(userFromSearch.toString());
-            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName())){
-                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
-            }
-            else userServiceResponse = userDetailResponse.getUser().get(0);
+//            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName())){
+//                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
+//            }
+//            else userServiceResponse = userDetailResponse.getUser().get(0);
+            userServiceResponse = userDetailResponse.getUser().get(0);
         }
         else {
             userServiceResponse = createUser(requestInfo,tenantId,user);
@@ -110,24 +111,24 @@ public class UserService {
     }
 
 
-    private void enrichUser(BirthRegistrationApplication application, RequestInfo requestInfo){
-        String accountIdFather = application.getFather().getId()+"";
-        String accountIdMother = application.getMother().getId()+"";
-        String tenantId = application.getTenantId();
-
-        UserDetailResponse userDetailResponseFather = searchUser(userUtils.getStateLevelTenant(tenantId),accountIdFather,null);
-        UserDetailResponse userDetailResponseMother = searchUser(userUtils.getStateLevelTenant(tenantId),accountIdMother,null);
-        if(userDetailResponseFather.getUser().isEmpty())
-            throw new CustomException("INVALID_ACCOUNTID","No user exist for the given accountId");
-
-        else application.getFather().setId(Integer.valueOf(userDetailResponseFather.getUser().get(0).getUuid()));
-
-        if(userDetailResponseMother.getUser().isEmpty())
-            throw new CustomException("INVALID_ACCOUNTID","No user exist for the given accountId");
-
-        else application.getMother().setId(Integer.valueOf(userDetailResponseMother.getUser().get(0).getUuid()));
-
-    }
+//    private void enrichUser(BirthRegistrationApplication application, RequestInfo requestInfo){
+//        String accountIdFather = application.getFather().getId()+"";
+//        String accountIdMother = application.getMother().getId()+"";
+//        String tenantId = application.getTenantId();
+//
+//        UserDetailResponse userDetailResponseFather = searchUser(userUtils.getStateLevelTenant(tenantId),accountIdFather,null);
+//        UserDetailResponse userDetailResponseMother = searchUser(userUtils.getStateLevelTenant(tenantId),accountIdMother,null);
+//        if(userDetailResponseFather.getUser().isEmpty())
+//            throw new CustomException("INVALID_ACCOUNTID","No user exist for the given accountId");
+//
+//        else application.getFather().setId(Integer.valueOf(userDetailResponseFather.getUser().get(0).getUuid()));
+//
+//        if(userDetailResponseMother.getUser().isEmpty())
+//            throw new CustomException("INVALID_ACCOUNTID","No user exist for the given accountId");
+//
+//        else application.getMother().setId(Integer.valueOf(userDetailResponseMother.getUser().get(0).getUuid()));
+//
+//    }
 
     /**
      * Creates the user from the given userInfo by calling user service

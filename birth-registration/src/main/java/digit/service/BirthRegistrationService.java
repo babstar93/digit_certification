@@ -68,16 +68,18 @@ public class BirthRegistrationService {
             return new ArrayList<>();
 
         // Enrich mother and father of applicant objects
-//        applications.forEach(application -> {
-//            enrichmentUtil.enrichFatherApplicantOnSearch(application);
-//            enrichmentUtil.enrichMotherApplicantOnSearch(application);
-//        });
+        applications.forEach(application -> {
+            enrichmentUtil.enrichFatherApplicantOnSearch(application);
+            enrichmentUtil.enrichMotherApplicantOnSearch(application);
+        });
 
         //WORKFLOW INTEGRATION
-//        applications.forEach(application -> {
-//            ProcessInstance process = workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), "BTR");
-//            application.setWorkflow(Workflow.builder().status(process.getState().getState()).build());
-//        });
+        applications.forEach(application -> {
+            ProcessInstance process = workflowService.getCurrentWorkflow(requestInfo, application.getTenantId(), application.getApplicationNumber());
+            if (process!=null){
+                application.setWorkflow(Workflow.builder().status(process.getState().getState()).build());
+            }
+        });
 
         // Otherwise return the found applications
         return applications;
