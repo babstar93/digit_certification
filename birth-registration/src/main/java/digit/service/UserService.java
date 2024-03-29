@@ -85,21 +85,39 @@ public class UserService {
                 .build();
         return user;
     }
+//    private String upsertUser(User user, RequestInfo requestInfo){
+//
+//        String tenantId = user.getTenantId();
+//        org.egov.common.contract.request.User userServiceResponse = null;
+//
+//        // Search on mobile number as user name
+//        UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getUserName());
+//        if (!userDetailResponse.getUser().isEmpty()) {
+//            org.egov.common.contract.request.User userFromSearch = userDetailResponse.getUser().get(0);
+//            log.info(userFromSearch.toString());
+//            userServiceResponse = userDetailResponse.getUser().get(0);
+//        }
+//        else {
+//            userServiceResponse = createUser(requestInfo,tenantId,user);
+//        }
+//
+//        return userServiceResponse.getUuid();
+//    }
+
     private String upsertUser(User user, RequestInfo requestInfo){
 
         String tenantId = user.getTenantId();
         org.egov.common.contract.request.User userServiceResponse = null;
 
         // Search on mobile number as user name
-        UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getUserName());
+        UserDetailResponse userDetailResponse = searchUser(userUtils.getStateLevelTenant(tenantId),null, user.getMobileNumber());
         if (!userDetailResponse.getUser().isEmpty()) {
             org.egov.common.contract.request.User userFromSearch = userDetailResponse.getUser().get(0);
             log.info(userFromSearch.toString());
-//            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName())){
-//                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
-//            }
-//            else userServiceResponse = userDetailResponse.getUser().get(0);
-            userServiceResponse = userDetailResponse.getUser().get(0);
+            if(!user.getUserName().equalsIgnoreCase(userFromSearch.getUserName()) && (!user.getMobileNumber().equalsIgnoreCase(userFromSearch.getUserName()))){
+                userServiceResponse = updateUser(requestInfo,user,userFromSearch);
+            }
+            else userServiceResponse = userDetailResponse.getUser().get(0);
         }
         else {
             userServiceResponse = createUser(requestInfo,tenantId,user);
